@@ -42,6 +42,7 @@ body {
     border: 1px solid;
     border-radius: 5px;
     margin: 0 auto;
+    padding-left: 2px;
     background-color: #b1b1b1;
     transition: .5s;
 }
@@ -107,7 +108,7 @@ body {
     margin-left: 6px;
     color: #fff;
     background-color: rgb(74, 71, 71);
-    transition: all .5s, border-radius 0.3s, background-color 0.3s; ;
+    transition: .3s;
 }
 
 .key-light {
@@ -119,73 +120,73 @@ body {
     background-color: #9c5e5e;
 }
 
-.key:active {
+.Tab,
+.CapsLock,
+.Backspace,
+.Delete,
+.ShiftLeft,
+.ShiftRight,
+.ControlLeft,
+.ControlRight,
+.MetaLeft,
+.AltLeft,
+.AltRight,
+.Enter,
+.ArrowUp,
+.ArrowDown,
+.ArrowLeft,
+.ArrowRight {
+    background-color: #222222;
+}
+
+.active {
     border-radius: 100px;
     border-color: #953e3e;
     background-color: #953e3e;
 }
 
-.tab,
-.capslock,
-.backspace,
-.delete,
-.shift-left,
-.shift-right,
-.ctrl-left,
-.ctrl-right,
-.win,
-.alt-left,
-.alt-right,
-.enter,
-.arrow-up,
-.arrow-down,
-.arrow-left,
-.arrow-right {
-    background-color: #222222;
-}
-
-.arrow-left,
-.arrow-right {
+.ArrowLeft,
+.ArrowRight {
     font-size: 20px;
 }
 
-.tab {
+.Tab {
     width: 50px;
 }
 
-.capslock {
+.CapsLock {
     width: 90px;
 }
 
-.shift-left {
+.ShiftLeft {
     width: 97px;
 }
 
-.shift-right {
+.ShiftRight {
     width: 93px;
 }
 
-.delete {
+.Delete {
     width: 45px;
 }
 
-.backspace {
+.Backspace {
     width: 103px;
 }
 
-.enter {
+.Enter {
     width: 100px;
 }
 
-.space {
+.Space {
     width: 311px;
 }
 
-.ctrl-left,
-.win,
-.alt-left,
-.alt-right,
-.ctrl-right {
+.ControlLeft,
+.MetaLeft,
+.AltLeft,
+.AltRight,
+.ControlRight {
     width: 46px;
 }
 /*keys styles end*/

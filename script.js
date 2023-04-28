@@ -7,6 +7,8 @@ const body = document.querySelector('body'),
       light = document.createElement('div');
 
 
+
+
 const lowKeysEng = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
                     'Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del',
                     'CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', "'", 'Enter',
@@ -51,14 +53,14 @@ const lowKeysRus = ['ё', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-',
                           'Ctrl', 'Win', 'Alt', ' ', 'Alt', '◄', '▼', '►', 'Ctrl'];
 
 
-const keysStyles = ['backquote', 'digit1', 'digit2', 'digit3', 'digit4', 'digit5', 'digit6', 'digit7',
-                    'digit8', 'digit9', 'digit0', 'minus', 'equal', 'backspace', 'tab', 'key-q', 'key-w',
-                    'key-e', 'key-r', 'key-t', 'key-y', 'key-u', 'key-i', 'key-o', 'key-p', 'bracket-left',
-                    'bracket-right', 'backslash', 'delete', 'capslock', 'key-a', 'key-s', 'key-d', 'key-f',
-                    'key-g', 'key-h', 'key-j', 'key-k', 'key-l', 'semicolon', 'quote', 'enter',  'shift-left',
-                    'key-z', 'key-x', 'key-c', 'key-v', 'key-b', 'key-n', 'key-m', 'comma', 'period', 'slash',
-                    'arrow-up', 'shift-right', 'ctrl-left', 'win',  'alt-left', 'space', 'alt-right', 'arrow-left',
-                    'arrow-down', 'arrow-right', 'ctrl-right',];
+const keysStyles = ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7',
+                    'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace', 'Tab', 'KeyQ', 'KeyW',
+                    'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft',
+                    'BracketRight', 'Backslash', 'Delete', 'CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF',
+                    'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'keyL', 'Semicolon', 'Quote', 'Enter',  'ShiftLeft',
+                    'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash',
+                    'ArrowUp', 'ShiftRight', 'ControlLeft', 'MetaLeft',  'AltLeft', 'Space', 'AltRight', 'ArrowLeft',
+                    'ArrowDown', 'ArrowRight', 'ControlRight'];
 
 const addRows = function (num) {
     for (let i = 0; i < num; i++) {
@@ -201,3 +203,106 @@ document.querySelector('.button-light').addEventListener('click', function () {
     document.querySelector('body').classList.toggle('body-dakr');
     document.querySelector('.input-text').classList.toggle('input-text-light');
 });
+
+
+document.querySelectorAll('.key').forEach((elem) => {
+    elem.addEventListener('mousedown', () => {
+        elem.classList.add('active');
+    });
+    elem.addEventListener('mouseup', () => {
+        elem.classList.remove('active');
+    });
+});
+
+/* document.querySelectorAll('.key').forEach((elem) => {
+    if (elem == document.onkeydown.code)
+}); */
+
+
+
+
+let rightShift = document.querySelector('.ShiftRight'),
+    leftShift = document.querySelector('.ShiftLeft'),
+    capslock = document.querySelector('.CapsLock');
+
+let lowKeys = document.querySelectorAll('.low-key'),
+    shiftKeys = document.querySelectorAll('.shift-key'),
+    capsKeys = document.querySelectorAll('.caps-key'),
+    shiftCapsKeys = document.querySelectorAll('.shift-caps-key');
+
+
+document.onkeydown = function(element) {
+    console.log(element.code);
+    document.querySelectorAll('.key').forEach((elem) => {
+        if (elem.classList.contains(element.code) && elem != capslock) {
+            elem.classList.add('active');
+        }
+    });
+
+    if ((element.code == 'ShiftLeft' && !capslock.classList.contains('active')) || (element.code == 'ShiftRight' && !capslock.classList.contains('active'))) {
+        for (let i = 0; i < lowKeys.length; i++) {
+            lowKeys[i].classList.add('hidden');
+            shiftKeys[i].classList.remove('hidden');
+        }
+    } else if ((element.code == 'ShiftLeft' && capslock.classList.contains('active')) || (element.code == 'ShiftRight' && capslock.classList.contains('active'))) {
+        for (let i = 0; i < shiftCapsKeys.length; i++) {
+            capsKeys[i].classList.add('hidden');
+            shiftCapsKeys[i].classList.remove('hidden');
+        }
+    }
+
+    if (element.code == 'CapsLock') {
+        capslock.classList.toggle('active');
+        if (capslock.classList.contains('active') && !leftShift.classList.contains('active') && !rightShift.classList.contains('active')) {
+            for (let i = 0; i < capsKeys.length; i++) {
+                lowKeys[i].classList.add('hidden');
+                capsKeys[i].classList.remove('hidden');
+            }
+        } else if (!capslock.classList.contains('active') && !leftShift.classList.contains('active') && !rightShift.classList.contains('active')) {
+            for (let i = 0; i < capsKeys.length; i++) {
+                lowKeys[i].classList.remove('hidden');
+                capsKeys[i].classList.add('hidden');
+            }
+        } else if (capslock.classList.contains('active') && (leftShift.classList.contains('active') || rightShift.classList.contains('active'))) {
+            for (let i = 0; i < capsKeys.length; i++) {
+                lowKeys[i].classList.add('hidden');
+                capsKeys[i].classList.add('hidden');
+                shiftKeys[i].classList.add('hidden');
+                shiftCapsKeys[i].classList.remove('hidden');
+            }
+        } else if (!capslock.classList.contains('active') && (leftShift.classList.contains('active') || rightShift.classList.contains('active'))) {
+            for (let i = 0; i < capsKeys.length; i++) {
+                capsKeys[i].classList.add('hidden');
+                shiftKeys[i].classList.remove('hidden');
+                shiftCapsKeys[i].classList.add('hidden');
+            }
+        }
+    }
+
+};
+
+document.onkeyup = function(element) {
+    document.querySelectorAll('.key').forEach((elem) => {
+        if (elem.classList.contains(element.code) && elem != capslock) {
+            elem.classList.remove('active');
+        }
+    });
+
+    if ((element.code == 'ShiftLeft' && !capslock.classList.contains('active')) || (element.code == 'ShiftRight' && !capslock.classList.contains('active'))) {
+        for (let i = 0; i < lowKeys.length; i++) {
+            lowKeys[i].classList.remove('hidden');
+            shiftKeys[i].classList.add('hidden');
+        }
+    } else if ((element.code == 'ShiftLeft' && capslock.classList.contains('active')) || (element.code == 'ShiftRight' && capslock.classList.contains('active'))) {
+        for (let i = 0; i < shiftCapsKeys.length; i++) {
+            capsKeys[i].classList.remove('hidden');
+            shiftCapsKeys[i].classList.add('hidden');
+        }
+    }
+
+
+
+};
+
+
+
