@@ -6,7 +6,7 @@ const body = document.querySelector('body'),
       OSDesc = document.createElement('h3'),
       light = document.createElement('div');
 
-
+let lang = 'en';
 
 
 const lowKeysEng = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace',
@@ -230,6 +230,9 @@ let lowKeys = document.querySelectorAll('.low-key'),
     capsKeys = document.querySelectorAll('.caps-key'),
     shiftCapsKeys = document.querySelectorAll('.shift-caps-key');
 
+let ruLang = document.querySelectorAll('.lang-ru'),
+    enLang = document.querySelectorAll('.lang-en');
+
 
 document.onkeydown = function(element) {
     console.log(element.code);
@@ -277,6 +280,24 @@ document.onkeydown = function(element) {
                 shiftCapsKeys[i].classList.add('hidden');
             }
         }
+    }
+
+    if (element.code == 'AltLeft' && document.querySelector('.ControlLeft') && lang == 'en') {
+
+        for (let i = 0; i < ruLang.length; i++) {
+            ruLang[i].classList.remove('hidden');
+            enLang[i].classList.add('hidden');
+        }
+        lang = 'ru';
+
+    } else if (element.code == 'AltLeft' && document.querySelector('.ControlLeft') && lang == 'ru') {
+
+        for (let i = 0; i < enLang.length; i++) {
+            enLang[i].classList.remove('hidden');
+            ruLang[i].classList.add('hidden');
+        }
+        lang = 'en';
+
     }
 
 };
