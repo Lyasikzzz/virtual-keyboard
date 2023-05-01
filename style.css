@@ -18,14 +18,14 @@ body {
     text-align: center;
     font-size: 36px;
     color: #8a2727;
-    margin: 30px 0;
+    margin: 25px 0;
 }
 
 .input-text {
     height: 180px;
     width: 812px;
     font-size: 16px;
-    margin: 0 auto 30px auto;
+    margin: 0 auto 25px auto;
     padding: 10px;
     background-color: #fefaf0;
     transition: .3s;
@@ -67,7 +67,7 @@ body {
     text-align: center;
     font-size: 20px;
     color: #8a2727;
-    margin: 30px 0;
+    margin: 25px 0;
 }
 
 .button-light {
