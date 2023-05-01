@@ -165,6 +165,7 @@ header.classList.add('header');
 header.innerText = 'RSS Virtual Keyboard';
 
 input.classList.add('input-text');
+input.focus();
 
 keyboard.classList.add('keyboard');
 
@@ -230,15 +231,50 @@ let lowKeys = document.querySelectorAll('.low-key'),
     capsKeys = document.querySelectorAll('.caps-key'),
     shiftCapsKeys = document.querySelectorAll('.shift-caps-key');
 
+let textarea = document.querySelector('.input-text');
+
 let ruLang = document.querySelectorAll('.lang-ru'),
     enLang = document.querySelectorAll('.lang-en');
 
 
 document.onkeydown = function(element) {
-    console.log(element.code);
+    console.log(element);
     document.querySelectorAll('.key').forEach((elem) => {
         if (elem.classList.contains(element.code) && elem != capslock) {
             elem.classList.add('active');
+            console.log(document.querySelectorAll('.key'));
+            if (lang === 'en' && element.code != 'Tab' && element.code != 'Delete' &&
+            element.code != 'Backspace' && element.code != 'Enter' && element.code != 'ShiftLeft' &&
+            element.code != 'ArrowUp' && element.code != 'ShiftRight' && element.code != 'ControlLeft' &&
+            element.code != 'ControlRight' && element.code != 'AltLeft' && element.code != 'Space' &&
+            element.code != 'AltRight' && element.code != 'ArrowLeft' && element.code != 'ArrowDown' &&
+            element.code != 'ArrowRight') {
+                textarea.value += elem.children[1].innerText;
+            } else if (lang === 'ru' && element.code != 'Tab' && element.code != 'Delete' &&
+            element.code != 'Backspace' && element.code != 'Enter' && element.code != 'ShiftLeft' &&
+            element.code != 'ArrowUp' && element.code != 'ShiftRight' && element.code != 'ControlLeft' &&
+            element.code != 'ControlRight' && element.code != 'AltLeft' && element.code != 'Space' &&
+            element.code != 'AltRight' && element.code != 'ArrowLeft' && element.code != 'ArrowDown' &&
+            element.code != 'ArrowRight') {
+                textarea.value += elem.children[0].innerText;
+            } else if (element.code == 'Tab') {
+                textarea.value += '  ';
+            } else if (element.code == 'Space') {
+                textarea.value += ' ';
+            } else if (element.code == 'Backspace') {
+                textarea.value = textarea.value.substring(0, textarea.value.length - 1);
+            } else if (element.code == 'Enter') {
+                textarea.value += '\n';
+            } else if (element.code == 'ArrowLeft') {
+                textarea.value += '◄';
+            } else if (element.code == 'ArrowRight') {
+                textarea.value += '►';
+            } else if (element.code == 'ArrowUp') {
+                textarea.value += '▲';
+            } else if (element.code == 'ArrowDown') {
+                textarea.value += '▼';
+            }
+
         }
     });
 
@@ -282,7 +318,7 @@ document.onkeydown = function(element) {
         }
     }
 
-    if (element.code == 'AltLeft' && document.querySelector('.ControlLeft') && lang == 'en') {
+    if (element.code == 'AltLeft' && document.querySelector('.ControlLeft').classList.contains('active') && lang == 'en') {
 
         for (let i = 0; i < ruLang.length; i++) {
             ruLang[i].classList.remove('hidden');
@@ -290,7 +326,7 @@ document.onkeydown = function(element) {
         }
         lang = 'ru';
 
-    } else if (element.code == 'AltLeft' && document.querySelector('.ControlLeft') && lang == 'ru') {
+    } else if (element.code == 'AltLeft' && document.querySelector('.ControlLeft').classList.contains('active') && lang == 'ru') {
 
         for (let i = 0; i < enLang.length; i++) {
             enLang[i].classList.remove('hidden');
@@ -325,5 +361,38 @@ document.onkeyup = function(element) {
 
 };
 
+var focusableElements = document.querySelectorAll('div, span');
+
+for (var i = 0; i < focusableElements.length; i++) {
+  focusableElements[i].addEventListener('focus', function(event) {
+    event.preventDefault();
+    document.querySelector('.input-text').focus();
+  });
+}
 
 
+/* document.addEventListener('click', function(elem) {
+    for (let i = 0; i < keysStyles.length; i++) {
+        if (elem.srcElement.classList.contains(keysStyles[i])) {
+            document.querySelector('.input-text').insertAdjacentText('beforeend', keysStyles[i]);
+        }
+    }
+}); */
+
+
+/* const enterInput = function (key) {
+
+}; */
+
+
+
+document.addEventListener('keydown', function(event) {
+    event.preventDefault();
+});
+
+
+
+/* document.querySelector('button').addEventListener('click', function() {
+    var textarea = document.querySelector('.input-text');
+    textarea.value += 'Добавленный текст';
+}); */
