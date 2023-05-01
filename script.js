@@ -182,7 +182,6 @@ wrapper.appendChild(header);
 wrapper.appendChild(input);
 wrapper.appendChild(keyboard);
 wrapper.appendChild(OSDesc);
-wrapper.appendChild(light);
 addRows(5);
 addKeys(14, 1);
 addKeys(15, 2);
