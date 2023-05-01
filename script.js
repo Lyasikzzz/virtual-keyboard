@@ -170,7 +170,7 @@ input.focus();
 keyboard.classList.add('keyboard');
 
 OSDesc.classList.add('OS-desc');
-OSDesc.innerText = 'Клавиатура создана в операционной системе Windows';
+OSDesc.innerText = 'Клавиатура создана в операционной системе Windows \n Смена языка LeftCtrl + LeftAlt';
 
 light.classList.add('button-light');
 light.innerText = 'LIGHT';
@@ -208,10 +208,101 @@ document.querySelector('.button-light').addEventListener('click', function () {
 
 document.querySelectorAll('.key').forEach((elem) => {
     elem.addEventListener('mousedown', () => {
-        elem.classList.add('active');
+
+        if (elem.className !== 'key CapsLock') {
+            elem.classList.add('active');
+        }
+
+        console.log(elem.className);
+        
+        let i = getCaret(textarea);
+
+
+/*         if (lang == 'en') {
+            textarea.value = textarea.value.slice(0, i) + elem.children[1].innerText  + textarea.value.slice(i);
+            textarea.setSelectionRange(i+1, i+1);
+        } else {
+            textarea.value = textarea.value.slice(0, i) + elem.children[0].innerText  + textarea.value.slice(i);
+            textarea.setSelectionRange(i+1, i+1);
+        } */
+
+        
+
+        if (lang === 'en' && elem.className !== 'key Tab active' && elem.className !== 'key Delete active' &&
+            elem.className !== 'key Backspace active' && elem.className !== 'key Enter active' && elem.className !== 'key ShiftLeft active' &&
+            elem.className !== 'key ArrowUp active' && elem.className !== 'key ShiftRight active' && elem.className !== 'key ControlLeft active' &&
+            elem.className !== 'key ControlLeft active' && elem.className !== 'key AltLeft active' && elem.className !== 'key Space active' &&
+            elem.className !== 'key AltRight active' && elem.className !== 'key ArrowLeft active' && elem.className !== 'key ArrowDown active' &&
+            elem.className !== 'key ArrowRight active' && elem.className !== 'key CapsLock active' && elem.className !== 'key CapsLock') {
+                textarea.value = textarea.value.slice(0, i) + elem.children[1].innerText  + textarea.value.slice(i);
+                textarea.setSelectionRange(i+1, i+1);
+            } else if (lang === 'ru' && elem.className !== 'key Tab active' && elem.className !== 'key Delete active' &&
+            elem.className !== 'key Backspace active' && elem.className !== 'key Enter active' && elem.className !== 'key ShiftLeft active' &&
+            elem.className !== 'key ArrowUp active' && elem.className !== 'key ShiftRight active' && elem.className !== 'key ControlLeft active' &&
+            elem.className !== 'key ControlLeft active' && elem.className !== 'key AltLeft active' && elem.className !== 'key Space active' &&
+            elem.className !== 'key AltRight active' && elem.className !== 'key ArrowLeft active' && elem.className !== 'key ArrowDown active' &&
+            elem.className !== 'key ArrowRight active' && elem.className !== 'key CapsLock active' && elem.className !== 'key CapsLock') {
+                textarea.value = textarea.value.slice(0, i) + elem.children[0].innerText  + textarea.value.slice(i);
+                textarea.setSelectionRange(i+1, i+1);
+            } else if (elem.className == 'key Tab active') {
+                textarea.value = textarea.value.slice(0, i) + '  '  + textarea.value.slice(i);
+                textarea.setSelectionRange(i+2, i+2);
+            } else if (elem.className == 'key Space active') {
+                textarea.value = textarea.value.slice(0, i) + ' '  + textarea.value.slice(i);
+                textarea.setSelectionRange(i+1, i+1);
+            } else if (elem.className == 'key Backspace active') {
+                if (i != 0) {
+                    textarea.value = textarea.value.slice(0, i - 1) + textarea.value.slice(i);
+                    textarea.setSelectionRange(i-1, i-1);
+                }
+            } else if (elem.className == 'key Enter active') {
+                textarea.value = textarea.value.slice(0, i) + '\n'  + textarea.value.slice(i);
+                textarea.setSelectionRange(i+1, i+1);
+            } else if (elem.className == 'key ArrowLeft active') {
+                textarea.value = textarea.value.slice(0, i) + '◄'  + textarea.value.slice(i);
+                textarea.setSelectionRange(i+1, i+1);
+            } else if (elem.className == 'key ArrowRight active') {
+                textarea.value = textarea.value.slice(0, i) + '►'  + textarea.value.slice(i);
+                textarea.setSelectionRange(i+1, i+1);
+            } else if (elem.className == 'key ArrowUp active') {
+                textarea.value = textarea.value.slice(0, i) + '▲'  + textarea.value.slice(i);
+                textarea.setSelectionRange(i+1, i+1);
+            } else if (elem.className == 'key ArrowDown active') {
+                textarea.value = textarea.value.slice(0, i) + '▼' + textarea.value.slice(i);
+                textarea.setSelectionRange(i+1, i+1);
+            } else if (elem.className == 'key Delete active') {
+                textarea.value = textarea.value.slice(0, i) + textarea.value.slice(i + 1);
+                textarea.setSelectionRange(i, i);
+            }
+
+
+   
+
+           if (elem.className == 'key CapsLock active') {
+               for (let i = 0; i < capsKeys.length; i++) {
+                lowKeys[i].classList.remove('hidden');
+                capsKeys[i].classList.add('hidden');
+                shiftKeys[i].classList.add('hidden');
+                shiftCapsKeys[i].classList.add('hidden');
+               }
+               elem.classList.remove('active');
+           } else if (elem.className == 'key CapsLock') {
+               for (let i = 0; i < capsKeys.length; i++) {
+                   lowKeys[i].classList.add('hidden');
+                   capsKeys[i].classList.remove('hidden');
+                   shiftKeys[i].classList.add('hidden');
+                   shiftCapsKeys[i].classList.add('hidden');
+               }
+               elem.classList.add('active');
+           }
+
+
     });
     elem.addEventListener('mouseup', () => {
-        elem.classList.remove('active');
+        if (elem.className !== 'key CapsLock active') {
+            elem.classList.remove('active');
+        }
+
     });
 });
 
@@ -219,7 +310,26 @@ document.querySelectorAll('.key').forEach((elem) => {
     if (elem == document.onkeydown.code)
 }); */
 
-
+function getCaret(el) { 
+    if (el.selectionStart) { 
+      return el.selectionStart; 
+    } else if (document.selection) { 
+      el.focus(); 
+   
+      var r = document.selection.createRange(); 
+      if (r == null) { 
+        return 0; 
+      } 
+   
+      var re = el.createTextRange(), 
+          rc = re.duplicate(); 
+      re.moveToBookmark(r.getBookmark()); 
+      rc.setEndPoint('EndToStart', re); 
+   
+      return rc.text.length; 
+    }  
+    return 0; 
+  }
 
 
 let rightShift = document.querySelector('.ShiftRight'),
@@ -238,52 +348,67 @@ let ruLang = document.querySelectorAll('.lang-ru'),
 
 
 document.onkeydown = function(element) {
-    console.log(element);
     document.querySelectorAll('.key').forEach((elem) => {
+        let i = getCaret(textarea);
         if (elem.classList.contains(element.code) && elem != capslock) {
             elem.classList.add('active');
-            console.log(document.querySelectorAll('.key'));
             if (lang === 'en' && element.code != 'Tab' && element.code != 'Delete' &&
             element.code != 'Backspace' && element.code != 'Enter' && element.code != 'ShiftLeft' &&
             element.code != 'ArrowUp' && element.code != 'ShiftRight' && element.code != 'ControlLeft' &&
             element.code != 'ControlRight' && element.code != 'AltLeft' && element.code != 'Space' &&
             element.code != 'AltRight' && element.code != 'ArrowLeft' && element.code != 'ArrowDown' &&
             element.code != 'ArrowRight') {
-                textarea.value += elem.children[1].innerText;
+                textarea.value = textarea.value.slice(0, i) + elem.children[1].innerText  + textarea.value.slice(i);
+                textarea.setSelectionRange(i+1, i+1);
             } else if (lang === 'ru' && element.code != 'Tab' && element.code != 'Delete' &&
             element.code != 'Backspace' && element.code != 'Enter' && element.code != 'ShiftLeft' &&
             element.code != 'ArrowUp' && element.code != 'ShiftRight' && element.code != 'ControlLeft' &&
             element.code != 'ControlRight' && element.code != 'AltLeft' && element.code != 'Space' &&
             element.code != 'AltRight' && element.code != 'ArrowLeft' && element.code != 'ArrowDown' &&
             element.code != 'ArrowRight') {
-                textarea.value += elem.children[0].innerText;
+                textarea.value = textarea.value.slice(0, i) + elem.children[0].innerText  + textarea.value.slice(i);
+                textarea.setSelectionRange(i+1, i+1);
             } else if (element.code == 'Tab') {
-                textarea.value += '  ';
+                textarea.value = textarea.value.slice(0, i) + '  '  + textarea.value.slice(i);
+                textarea.setSelectionRange(i+2, i+2);
             } else if (element.code == 'Space') {
-                textarea.value += ' ';
+                textarea.value = textarea.value.slice(0, i) + ' '  + textarea.value.slice(i);
+                textarea.setSelectionRange(i+1, i+1);
             } else if (element.code == 'Backspace') {
-                textarea.value = textarea.value.substring(0, textarea.value.length - 1);
+                if (i != 0) {
+                    textarea.value = textarea.value.slice(0, i - 1) + textarea.value.slice(i);
+                    textarea.setSelectionRange(i-1, i-1);
+                }
             } else if (element.code == 'Enter') {
-                textarea.value += '\n';
+                textarea.value = textarea.value.slice(0, i) + '\n'  + textarea.value.slice(i);
+                textarea.setSelectionRange(i+1, i+1);
             } else if (element.code == 'ArrowLeft') {
-                textarea.value += '◄';
+                textarea.value = textarea.value.slice(0, i) + '◄'  + textarea.value.slice(i);
+                textarea.setSelectionRange(i+1, i+1);
             } else if (element.code == 'ArrowRight') {
-                textarea.value += '►';
+                textarea.value = textarea.value.slice(0, i) + '►'  + textarea.value.slice(i);
+                textarea.setSelectionRange(i+1, i+1);
             } else if (element.code == 'ArrowUp') {
-                textarea.value += '▲';
+                textarea.value = textarea.value.slice(0, i) + '▲'  + textarea.value.slice(i);
+                textarea.setSelectionRange(i+1, i+1);
             } else if (element.code == 'ArrowDown') {
-                textarea.value += '▼';
+                textarea.value = textarea.value.slice(0, i) + '▼' + textarea.value.slice(i);
+                textarea.setSelectionRange(i+1, i+1);
+            } else if (element.code == 'Delete') {
+                textarea.value = textarea.value.slice(0, i) + textarea.value.slice(i + 1);
+                textarea.setSelectionRange(i, i);
             }
-
         }
     });
 
-    if ((element.code == 'ShiftLeft' && !capslock.classList.contains('active')) || (element.code == 'ShiftRight' && !capslock.classList.contains('active'))) {
+    if ((element.code == 'ShiftLeft' && !capslock.classList.contains('active')) || (element.code == 'ShiftRight' &&
+         !capslock.classList.contains('active'))) {
         for (let i = 0; i < lowKeys.length; i++) {
             lowKeys[i].classList.add('hidden');
             shiftKeys[i].classList.remove('hidden');
         }
-    } else if ((element.code == 'ShiftLeft' && capslock.classList.contains('active')) || (element.code == 'ShiftRight' && capslock.classList.contains('active'))) {
+    } else if ((element.code == 'ShiftLeft' && capslock.classList.contains('active')) || (element.code == 'ShiftRight' &&
+                capslock.classList.contains('active'))) {
         for (let i = 0; i < shiftCapsKeys.length; i++) {
             capsKeys[i].classList.add('hidden');
             shiftCapsKeys[i].classList.remove('hidden');
@@ -361,14 +486,14 @@ document.onkeyup = function(element) {
 
 };
 
-var focusableElements = document.querySelectorAll('div, span');
+/* var focusableElements = document.querySelectorAll('div, span');
 
 for (var i = 0; i < focusableElements.length; i++) {
   focusableElements[i].addEventListener('focus', function(event) {
     event.preventDefault();
     document.querySelector('.input-text').focus();
   });
-}
+} */
 
 
 /* document.addEventListener('click', function(elem) {
@@ -390,7 +515,9 @@ document.addEventListener('keydown', function(event) {
     event.preventDefault();
 });
 
-
+document.addEventListener('click', function(e) {
+    console.log(e.target.classList[1]);
+});
 
 /* document.querySelector('button').addEventListener('click', function() {
     var textarea = document.querySelector('.input-text');
