@@ -193,7 +193,7 @@ addSymbolsEn();
 addSymbolsRu();
 addKeysStyles();
 
-
+/* 
 document.querySelector('.button-light').addEventListener('click', function () {
     document.querySelectorAll('.key').forEach(e => {
         e.classList.toggle('key-light');
@@ -202,7 +202,7 @@ document.querySelector('.button-light').addEventListener('click', function () {
     document.querySelector('.keyboard').classList.toggle('keyboard-light');
     document.querySelector('body').classList.toggle('body-dakr');
     document.querySelector('.input-text').classList.toggle('input-text-light');
-});
+}); */
 
 
 document.querySelectorAll('.key').forEach((elem) => {
